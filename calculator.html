@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>my calculator</title>
+    <link rel="stylesheet" href="calculator.css">
+
+    <script>
+
+        var currentnum = 0;
+        var storednum = 0;
+        var operator = '';
+        var numberText = '0';
+        var typing = false;
+
+        function handleNumber(num){
+
+            if(typing == false){
+                numberText = '0';
+                typing = true;
+            }
+
+            if(num == '.'){
+                if(numberText.indexOf('.') == -1){
+                    numberText += '.';
+                }
+            }
+            else if(numberText == '0'){
+                numberText = String(Number(num));
+            }
+            else{
+                numberText += num;
+            }
+
+            currentnum = Number(numberText);
+            document.getElementById('after').innerHTML = numberText;
+        }
+
+        function handleOperator(op){
+
+            if(op == 'AC'){
+                currentnum = 0;
+                storednum = 0;
+                operator = '';
+                numberText = '0';
+                typing = false;
+
+                document.getElementById('after').innerHTML = 0;
+                return;
+            }
+
+
+            if(op == '+/-'){
+                if(operator != '' && typing == false){
+                    return;
+                }
+
+                currentnum = currentnum * -1;
+                numberText = String(currentnum);
+                typing = true;
+
+                document.getElementById('after').innerHTML = currentnum;
+                return;
+            }
+
+
+            if(op == '%'){
+                if(operator != '' && typing == false){
+                    return;
+                }
+
+                currentnum = currentnum / 100;
+                numberText = String(currentnum);
+                typing = true;
+
+                document.getElementById('after').innerHTML = currentnum;
+                return;
+            }
+
+
+            if(operator == ''){
+                storednum = currentnum;
+            }
+
+            else if(operator == '+' && typing == true){
+                storednum += currentnum;
+            }
+
+            else if(operator == '-' && typing == true){
+                storednum -= currentnum;
+            }
+
+            else if(operator == 'x' && typing == true){
+                storednum *= currentnum;
+            }
+
+            else if(operator == '/' && typing == true){
+
+                if(currentnum == 0){
+                    handleOperator('AC');
+                    document.getElementById('after').innerHTML = 'Error';
+                    return;
+                }
+
+                storednum /= currentnum;
+            }
+
+            if(op == '='){
+
+                if(operator != '' && typing == false){
+                    return;
+                }
+
+                currentnum = storednum;
+                operator = '';
+                numberText = String(currentnum);
+                typing = false;
+
+                document.getElementById('after').innerHTML = storednum;
+                return;
+            }
+
+
+            if(op == '+'){
+                operator = '+';
+            }
+            else if(op == '-'){
+                operator = '-';
+            }
+            else if(op == 'x'){
+                operator = 'x';
+            }
+            else if(op == '/'){
+                operator = '/';
+            }
+
+            currentnum = 0;
+            numberText = '0';
+            typing = false;
+
+            document.getElementById('after').innerHTML = storednum;
+        }
+
+    </script>
+
+</head>
+
+<body>
+
+    <div id="calculator">
+
+        <div id="numberfield">
+            <div id="after">0</div>
+        </div>
+
+
+        <div class="standardbutton" onclick="handleOperator('+/-')">+/-</div>
+
+        <div class="standardbutton" onclick="handleOperator('AC')">AC</div>
+
+        <div class="standardbutton" onclick="handleOperator('%')">%</div>
+
+        <div class="standardbutton" onclick="handleOperator('/')">÷</div>
+
+        <div class="standardbutton" onclick="handleNumber(7)">7</div>
+
+        <div class="standardbutton" onclick="handleNumber(8)">8</div>
+
+        <div class="standardbutton" onclick="handleNumber(9)">9</div>
+
+        <div class="standardbutton" onclick="handleOperator('x')">×</div>
+
+        <div class="standardbutton" onclick="handleNumber(4)">4</div>
+
+        <div class="standardbutton" onclick="handleNumber(5)">5</div>
+
+        <div class="standardbutton" onclick="handleNumber(6)">6</div>
+
+        <div class="standardbutton" onclick="handleOperator('-')">-</div>
+
+        <div class="standardbutton" onclick="handleNumber(1)">1</div>
+
+        <div class="standardbutton" onclick="handleNumber(2)">2</div>
+
+        <div class="standardbutton" onclick="handleNumber(3)">3</div>
+
+        <div class="standardbutton" onclick="handleOperator('+')">+</div>
+
+        <div class="standardbutton" onclick="handleNumber(0)">0</div>
+
+        <div class="standardbutton" onclick="handleNumber('00')">00</div>
+
+        <div class="standardbutton" onclick="handleNumber('.')">.</div>
+
+        <div class="standardbutton" onclick="handleOperator('=')">=</div>
+
+    </div>
+
+</body>
+</html>
