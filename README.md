@@ -1,1 +1,1 @@
-# My-calculaotr
+# My-calculator
